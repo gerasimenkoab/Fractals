@@ -41,9 +41,8 @@ public class Mandelbrot extends JFrame {
         for (Point p:screenBuffer){
             z_0 = p.getPoint();
             pointChecker pc = new pointChecker(z_0, maxIteration);
-            val = maxIteration - pc.isMandelbrot(z_0, maxIteration);
+            val = pc.isMandelbrot(z_0, maxIteration);
 
-//            val = pc.mand(z_0, maxIteration);
             c = new Color(val,val,val);
             hue = val / 64.0f;
             c = Color.getHSBColor(hue, 1.0f, 0.6f);
