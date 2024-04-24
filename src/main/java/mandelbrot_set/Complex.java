@@ -10,12 +10,6 @@ public class Complex {
         this.re = real;
         this.im = imaginary;
     }
-    public double getRe(){
-        return this.re;
-    }
-    public double getIm(){
-        return this.im;
-    }
 
     public double module(){
         return sqrt(re * re + im * im);
