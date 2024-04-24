@@ -43,6 +43,14 @@ public class Complex {
         return new Complex(tempReal / denominator, tempImaginary / denominator);
     }
 
+    public double re(){
+        return this.re;
+    }
+
+    public double im(){
+        return this.im;
+    }
+
     @Override
     public String toString() {
         return "Complex{" +
