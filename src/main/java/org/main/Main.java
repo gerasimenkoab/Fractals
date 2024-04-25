@@ -11,6 +11,6 @@ public class Main {
         fractal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fractal.setSize(1000,1000);
         fractal.setVisible(true);
-        fractal.manyPointTest();
+        fractal.run();
     }
 }

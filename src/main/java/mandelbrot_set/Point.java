@@ -1,40 +1,42 @@
 package mandelbrot_set;
 
+import java.awt.*;
+
 public class Point {
-    protected Complex z;
-    protected int color;
-    protected int ix, iy;
-    public Point(double x, double y){
-        this.z = new Complex(x,y);
-        this.color = 0;
+    protected int x, y;
+    protected Color color;
+
+    public Point(int x, int y){
+        this.x = x;
+        this.y = y;
+        this.color =  new Color(0,0,0);
     }
-    public Point(double x, double y, int color){
-        this.z = new Complex(x,y);
-        this.color = color;
+
+    public Point(int x, int y, int color){
+        this.x = x;
+        this.y = y;
+        this.color = new Color(color,color,color);
     }
-    public Point(double x, double y, int ix, int iy, int color){
-        this.z = new Complex(x,y);
-        this.color = color;
-        this.ix = ix;
-        this.iy = iy;
-    }
-    public Point(Complex z, int color){
-        this.z = z;
+
+    public Point(int x, int y, Color color){
+        this.x = x;
+        this.y = y;
         this.color = color;
     }
 
-    public Complex getPoint(){
-        return z;
+    public int getX(){
+        return this.x;
     }
 
-    public int getColor(){
+    public int getY(){
+        return this.y;
+    }
+
+    public Color getColor(){
         return color;
     }
 
-    public int getIX(){
-        return this.ix;
-    }
-    public int getIY(){
-        return this.iy;
+    public void setColor(Color color){
+        this.color = color;
     }
 }

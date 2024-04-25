@@ -12,6 +12,7 @@ public class Mandelbrot extends JFrame {
     int width = 1000;
     int height = 1000;
 
+
     DrawPanel imageOnCanvas;
     public Mandelbrot( int maxIter){
         super("Mandelbrot set");
@@ -24,31 +25,14 @@ public class Mandelbrot extends JFrame {
 
     }
 
+
     public void manyPointTest(){
-        createScreenBuffer(width,height,-2.0,-1.0,0.002,0.002);
 //        pointTest(0,0, true); //y
 //        pointTest(2,0, false); //n
 //        pointTest(1,1, false); //n
 //        pointTest(0,1, true); //y
 //        pointTest(-0.5,0, true); //y
 //        pointTest(-0.1,-0.64, true); //y
-        long  tStart = System.nanoTime();
-        System.out.println("Starting calculate buffer.... ");
-        boolean r;
-        Color c;
-        int val;
-        float hue;
-        for (Point p:screenBuffer){
-            z_0 = p.getPoint();
-            pointChecker pc = new pointChecker(z_0, maxIteration);
-            val = pc.isMandelbrot(z_0, maxIteration);
-
-            c = new Color(val,val,val);
-            hue = val / 64.0f;
-            c = Color.getHSBColor(hue, 1.0f, 0.6f);
-            imageOnCanvas.putPixel(p.getIX(),p.getIY(), c);
-        }
-        System.out.println("Done in  "+ (System.nanoTime()-tStart)/1.e9+"sec");
     }
 
 //    public void pointTest(double re, double im, boolean ans){
@@ -60,35 +44,40 @@ public class Mandelbrot extends JFrame {
 //
 //    }
 
-    public void createScreenBuffer(int width, int height, double leftLowerX,double leftLowerY, double stepX,double stepY){
+    public void createScreenBuffer(int width, int height){
         this.screenBuffer = new ArrayList<Point>();
 
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
-                this.screenBuffer.add(new Point(i * stepX + leftLowerX, j * stepY + leftLowerY,i,j,0));
+                this.screenBuffer.add(new Point(i, j));
             }
         }
         System.out.println("Buffer initialized.");
     }
     public void run(){
-        // prepare canvas 500x500
-        PlotFrame ui = new PlotFrame();
-        ui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ui.setSize(300,200);
-        ui.setLocation(1000,0);
-        ui.setVisible(true);
+        double leftLowerX = -2.0;
+        double leftLowerY = -1.0;
+        double stepX = 0.002;
+        double stepY = 0.002;
+        Color c;
+        int val;
 
-        createScreenBuffer(400,400,-2.,-2.,0.01,0.01);
-        double scaler =10;
-//        for i from 1 to 500
-//            for j from 1 to 500
-//                x = i / scaler;
-//                y = j / scaler;
-//                if (isMandelbrot(new Complex(x,y, maxIteration))){
-//                    putPixel(i,j,black);
-//                }else{
-//                    putPixel(i,j,white);
-//                }
+        createScreenBuffer(width,height);
+        long  tStart = System.nanoTime();
+        System.out.println("Starting calculate buffer.... ");
+        for (Point p:screenBuffer){
+            z_0 = new Complex(p.getX() * stepX + leftLowerX, p.getY() * stepY + leftLowerY);
+            pointChecker pc = new pointChecker(z_0, maxIteration);
+            val = pc.isMandelbrot(z_0, maxIteration);
+
+//            c = new Color(0,val,0);
+            c = Color.getHSBColor(val / 64.0f, 1.0f, 0.6f);
+            p.setColor(c);
+        }
+        System.out.println("Done in  "+ (System.nanoTime()-tStart)/1.e9+"sec");
+        for (Point p:screenBuffer){
+            imageOnCanvas.putPixel(p.getX(),p.getY(), p.getColor());
+        }
 
     }
 
