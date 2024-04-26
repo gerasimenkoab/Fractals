@@ -29,8 +29,8 @@ public class MandelbrotSet {
             z_0 = new Complex(cFrame.getX(p.getX()), cFrame.getY(p.getY()));
             val = isMandelbrot(z_0, z_0, maxIteration);
 
-            c = new Color(0,val,255);
-//            c = Color.getHSBColor(val / 64.0f, 1.0f, 0.6f);
+//            c = new Color(0,val,255);
+            c = Color.getHSBColor(val / 64.0f, 1.0f, 0.6f);
             p.setColor(c);
         }
     }

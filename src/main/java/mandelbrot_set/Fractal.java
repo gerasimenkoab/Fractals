@@ -39,26 +39,17 @@ public class Fractal {
         int val;
         CoordinateFrame cFrame;
 
-        DrawPanel imageOnCanvas;
-
-        JFrame appWindow = new JFrame();
-        appWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        appWindow.setSize(width,height);
-        appWindow.setTitle("Mandelbrot set");
-        appWindow.setLayout(new BorderLayout());
-        imageOnCanvas = new DrawPanel(width,height);
-        appWindow.add(imageOnCanvas, BorderLayout.CENTER);
-        appWindow.setVisible(true);
+        AppGUI appWindow = new AppGUI("Mandelbrot Set", width,height);
 
       //  cFrame = new CoordinateFrameBoxed(width,height,minX,minY,maxX,maxY);
-        cFrame = new CoordinateFrameCentered(width,height,0.4,0.4,0.0001,0.0001);
+        cFrame = new CoordinateFrameCentered(width,height,0.0,0.0,0.003,0.003);
         createScreenBuffer(width,height);
         long  tStart = System.nanoTime();
         System.out.println("Starting calculate buffer.... ");
         MandelbrotSet pc = new MandelbrotSet(maxIteration);
         pc.isMandelbrotArray(screenBuffer,cFrame);
         System.out.println("Done in  "+ (System.nanoTime()-tStart)/1.e9+"sec");
-        imageOnCanvas.drawPointsArray(screenBuffer);
+        appWindow.drawArray(screenBuffer);
 
     }
 
