@@ -25,8 +25,23 @@ public class MandelbrotSet {
     public void isMandelbrotArray(ArrayList<Point> points, CoordinateFrame cFrame){
         int val;
         Color c;
+        double reZ, imZ;
+        // combinations:
+//        reZ = -0.79;
+//        imZ = 0.15;
+//        reZ = 0.31;
+//        imZ = -0.01;
+//        reZ = -1.47;
+//        imZ = -0.0;
+//        reZ = 0.31;
+//        imZ = -0.01;
+        reZ = -0.5;
+        imZ = -0.0;
+        Complex z_c = new Complex(reZ, imZ);
+        cFrame.setCenter(reZ, imZ);
         for (Point p:points){
             z_0 = new Complex(cFrame.getX(p.getX()), cFrame.getY(p.getY()));
+//            val = isMandelbrot(z_0, z_c, maxIteration);
             val = isMandelbrot(z_0, z_0, maxIteration);
 
 //            c = new Color(0,val,255);

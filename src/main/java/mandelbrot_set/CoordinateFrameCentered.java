@@ -10,6 +10,7 @@ public class CoordinateFrameCentered implements CoordinateFrame {
     double stepX;
     double stepY;
 
+
     public CoordinateFrameCentered(int width, int height, double centerX, double centerY, double stepX, double stepY){
         int halfWidth = width / 2;
         int halfHeight = height / 2;
@@ -29,6 +30,15 @@ public class CoordinateFrameCentered implements CoordinateFrame {
     public double getY(int stepIndex){
         // get Y coord in ordinary system of coordinates X - directed right, Y- directed up
         return minY + (height-stepIndex) * stepY;
+    }
+
+    public void setCenter(double centerX, double centerY){
+        int halfWidth = width / 2;
+        int halfHeight = height / 2;
+        this.maxX = centerX + stepX * halfWidth;
+        this.maxY = centerY + stepY * halfHeight;
+        this.minX = centerX - stepX * halfWidth;
+        this.minY = centerY - stepY * halfHeight;
     }
 
 }

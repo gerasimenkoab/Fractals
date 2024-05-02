@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Fractal {
     Complex z_0;
-    ArrayList<Point> screenBuffer;
     int maxIteration;
+    ArrayList<Point> screenBuffer;
 
 
     public Fractal(int maxIter){
@@ -16,19 +16,9 @@ public class Fractal {
     }
 
 
-    public void createScreenBuffer(int width, int height){
-        this.screenBuffer = new ArrayList<Point>();
-
-        for (int j = 0; j < height; j++) {
-            for (int i = 0; i < width; i++) {
-                this.screenBuffer.add(new Point(i, j));
-            }
-        }
-        System.out.println("Buffer initialized.");
-    }
     public void run(){
         int width = 1000;
-        int height = 1000;
+        int height = 1100;
 
         double minX = -2.0;
         double minY = -1.5;
@@ -39,18 +29,38 @@ public class Fractal {
         int val;
         CoordinateFrame cFrame;
 
-        AppGUI appWindow = new AppGUI("Mandelbrot Set", width,height);
+        MandelbrotSet pc = new MandelbrotSet(maxIteration);
+        screenBuffer = createScreenBuffer(1000,1000);
 
-      //  cFrame = new CoordinateFrameBoxed(width,height,minX,minY,maxX,maxY);
-        cFrame = new CoordinateFrameCentered(width,height,0.0,0.0,0.003,0.003);
-        createScreenBuffer(width,height);
+        AppGUI appWindow = new AppGUI("Mandelbrot Set", width,height, this);
+
         long  tStart = System.nanoTime();
         System.out.println("Starting calculate buffer.... ");
-        MandelbrotSet pc = new MandelbrotSet(maxIteration);
+
+        //  cFrame = new CoordinateFrameBoxed(width,height,minX,minY,maxX,maxY);
+        cFrame = new CoordinateFrameCentered(width,height,0.0,0.0,0.002,0.002);
         pc.isMandelbrotArray(screenBuffer,cFrame);
+
         System.out.println("Done in  "+ (System.nanoTime()-tStart)/1.e9+"sec");
+
         appWindow.drawArray(screenBuffer);
 
+    }
+
+    public ArrayList<Point> createScreenBuffer(int width, int height){
+        ArrayList<Point> buffer = new ArrayList<>();
+        try {
+            for (int j = 0; j < height; j++) {
+                for (int i = 0; i < width; i++) {
+                    buffer.add(new Point(i, j));
+                }
+            }
+        }catch(OutOfMemoryError e){
+            e.printStackTrace();
+            return null;
+        }
+        System.out.println("Buffer initialized.");
+        return buffer;
     }
 
 }
